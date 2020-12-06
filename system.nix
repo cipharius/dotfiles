@@ -15,7 +15,11 @@ in
   dotfiles = import ./user.nix;
   networking.hostName = config.dotfiles.hostname;
 
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+  boot = {
+    loader.systemd-boot.enable = true;
+    loader.efi.canTouchEfiVariables = true;
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
+  };
 
   nixpkgs = {
     config = {
