@@ -111,10 +111,9 @@ in
     enable = true;
   };
   hardware.opengl.driSupport32Bit = true;
-  # hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
 
-  # hardware.bluetooth.enable = true;
-  # services.blueman.enable = true;
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
   documentation.nixos.enable = true;
 
