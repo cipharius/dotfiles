@@ -9,7 +9,6 @@ let
 in
 {
   imports = [
-      ./system-private.nix
       ./nix/dotfiles.nix
     ];
 

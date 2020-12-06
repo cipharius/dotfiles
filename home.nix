@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 {
   imports = [
-    ./home-private.nix
     ./nix/dotfiles.nix
     ./home/wm.nix
     ./home/git.nix
