@@ -1,0 +1,191 @@
+# PLUGINS #
+#source "%val{config}/plugins/plug.kak/rc/plug.kak"
+
+# plug "robertmeta/plug.kak" noload
+
+# plug "kak-lsp/kak-lsp" do %{
+#   cargo install --force --locked --path .
+# } config %{
+#   # uncomment to enable debugging
+#   # set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
+
+#   define-command ne -docstring 'go to next error/warning from lsp' %{ lsp-find-error --include-warnings }
+#   define-command pe -docstring 'go to previous error/warning from lsp' %{ lsp-find-error --previous --include-warnings }
+#   define-command ee -docstring 'go to current error/warning from lsp' %{ lsp-find-error --include-warnings; lsp-find-error --previous --include-warnings }
+
+#   define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
+
+#   hook global WinSetOption filetype=(ruby|haskell|json) %{
+#     # set-option window lsp_auto_highlight_references true # NOTE Not supported by JSON
+#     set-option window lsp_hover_anchor false
+#     map window user , %{: enter-user-mode lsp<ret>}
+#     echo -debug "Enabling LSP for filtetype %opt{filetype}"
+#     lsp-enable-window
+#   }
+
+#   hook global KakEnd .* lsp-exit
+# }
+
+# plug "TeddyDD/kakoune-edit-or-dir" config %{
+#     unalias global e edit
+#     alias global e edit-or-dir
+#     hook global WinSetOption filetype=file_select %{
+#         map window normal l ':<space>edit-or-dir-forward<ret>'
+#         map window normal h ':<space>edit-or-dir-back<ret>'
+#         map window normal q ':<space>delete-buffer<ret>'
+#     }
+# }
+
+# plug "andreyorst/fzf.kak" config %{
+#     map -docstring "fzf" \
+#         global user <space> ': fzf-mode<ret>'
+# }
+
+# plug "andreyorst/tagbar.kak" defer tagbar %{
+#   set-option global tagbar_sort false
+#   set-option global tagbar_size 40
+#   set-option global tagbar_display_anon false
+# }
+
+# plug "cipharius/buffer-by-name.kak" defer buffer-by-name %{
+#   alias global b buffer-by-name
+# } demand
+
+# plug "andreyorst/kaktree" config %{
+#   hook global WinSetOption filetype=kaktree %{
+#     remove-highlighter buffer/numbers
+#     remove-highlighter buffer/matching
+#     remove-highlighter buffer/wrap
+#     remove-highlighter buffer/show-whitespaces
+#   }
+#   kaktree-enable
+# }
+
+# plug "https://gitlab.com/notramo/elvish.kak" defer elvish %{} demand
+
+# Dependancy of connect.kak
+# plug "alexherbo2/prelude.kak"
+# plug "alexherbo2/connect.kak"
+
+# plug "eraserhd/kak-ansi"
+
+# plug "cipharius/restclient.kak" config %{
+#     hook global WinSetOption filetype=restclient %{
+#         map window user e %{: restclient-execute<ret>}
+#     }
+# }
+
+# SCRIPTS #
+#source "%val{config}/scripts/lf.kak"
+#require-module lf
+
+# source "%val{config}/scripts/neuron.kak"
+# require-module neuron
+# hook global WinSetOption filetype=markdown %{
+#   map window normal <ret> %{: neuron-follow-link<ret>}
+# }
+
+# VISUAL #
+ 
+colorscheme zenburn
+
+add-highlighter global/number-lines number-lines -relative
+# add-highlighter global/ wrap -word -indent -marker '↪ ' -width 80
+add-highlighter global/todos regex (?:TODO|NOTE)\s 0:red+bf
+add-highlighter global/trailing-whitespace regex "[ 	]+$" 0:BufferPadding
+
+set-face global PrimarySelection default+bu
+
+set-option global autowrap_fmtcmd 'fmt --width %c'
+set-option -add global ui_options ncurses_assistant=cat
+
+# HOOKS #
+
+hook global ModeChange "push:normal:prompt" %{
+    map -docstring 'Insert selection' \
+        window prompt <a-i> "%reg{.}<a-!>"
+}
+
+# hook global WinSetOption "filetype=(?:c|cpp)" %{
+#     map -docstring "describe symbol at point" \
+#     	window user d ": rtags-symbol-info<ret>"
+#     map -docstring "symbol definition" \
+#         window goto s "<esc>: rtags-follow<ret>"
+# }
+
+hook global WinSetOption "filetype=kak" %{
+    map -docstring "evaluate whole buffer" \
+        window user e %{%: eval %reg{.}<ret>}
+}
+
+hook global ModuleLoaded "ruby" %{
+    # Change heredoc to support different language highlighting
+    remove-highlighter shared/ruby/heredoc
+    add-highlighter shared/ruby/heredoc region '<<[-~]?(?!self)(\w+)'      '^\h*(\w+)$' regions
+    add-highlighter shared/ruby/heredoc/default default-region fill string
+
+    require-module sql
+    add-highlighter shared/ruby/heredoc/sql region '<<-SQL' 'SQL' ref sql
+}
+
+# COMMANDS #
+
+define-command split -params 0 -docstring \
+"Creates new client with current buffer" \
+%{
+  new %sh{
+    line=$(echo "$kak_window_range" | cut -d' ' -f 1)
+    column=$(echo "$kak_window_range" | cut -d' ' -f 2)
+    printf 'buffer -- %s;' "$kak_bufname"
+    printf 'execute-keys %s jvt;' "$line"
+    printf 'select -- %s;' "$kak_selection_desc"
+    printf 'execute-keys V %s <esc>;' "$(printf "%""$column""s" | tr ' ' 'l')"
+  }
+}
+
+define-command change-filetype \
+	-params 1..1 \
+	-docstring "change-filetype <filetype>: set filetype of current buffer" \
+	%{ set buffer filetype %arg{1} }
+
+define-command edit-config \
+	-docstring "edit-config: open the user config file" \
+	%{ edit "%val{config}/kakrc" }
+
+define-command -params 1.. cheat %{
+    try %{ delete-buffer! *cheat* }
+    edit -scratch *cheat*
+    execute-keys "!curl https://cheat.sh/%sh{echo $@ | tr ' ' '+'}<ret>"
+    ansi-render
+}
+
+define-command clear-trailing-whitespaces \
+  -docstring "deletes all trailing whitespaces in current buffer" \
+  %{ try %{ execute-keys -draft '%s[ \t]+$<ret>d' } }
+
+# OPTIONS #
+require-module x11
+declare-option str term 'kitty'
+set-option global termcmd "%opt{term} -e fish -c "
+set-option global indentwidth 2
+set-option global grepcmd 'rg -Hn'
+alias global tag ctags-search
+
+# MAPPINGS #
+map global normal / "/(?i)"
+map -docstring 'Search cheatsheet' \
+    global user c ":cheat "
+map -docstring 'Search filetype cheatsheet' \
+    global user C ":cheat %opt{filetype}/"
+map -docstring 'Calculate selection' \
+    global user = '| calc -p<ret>'
+map -docstring 'System copy' \
+    global user y '<a-|> xsel --input --clipboard<ret>'
+map -docstring 'System paste' \
+    global user p '! xsel --output --clipboard<ret>'
+map -docstring 'lf' \
+    global user d ': enter-user-mode lf-mode<ret>'
+map -docstring 'Split window' \
+    global user s ': split<ret>'
+map -docstring 'Tagbar toggle' \
+    global user t ': try tagbar-toggle catch tagbar-enable<ret>'

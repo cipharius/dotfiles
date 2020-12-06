@@ -7,6 +7,7 @@
     ./home/qutebrowser.nix
     ./home/kitty.nix
     ./home/fish-shell.nix
+    ./home/kakoune.nix
   ];
 
   dotfiles = import ./user.nix;
@@ -57,13 +58,6 @@
     wget
     zip
 
-    # editors
-    (kakoune.override {
-      configure = {
-        plugins = [ kakoune-surround kakoune-rainbow ];
-      };
-    })
-
     # haskell
     stack
     haskellPackages.cabal-install
@@ -83,8 +77,6 @@
   ];
 
   manual.manpages.enable = true;
-
-  home.file.".config/kak/kakrc".source = ./dotfiles/kakrc;
 
   home.file.".profile" = {
     text = ''
