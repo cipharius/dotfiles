@@ -8,8 +8,6 @@ with lib;
       name = mkOption { type = types.str; };
       email = mkOption { type = types.str; };
       hostname = mkOption { type = types.str; };
-      gpgKey = mkOption { type = types.str; default = ""; };
-      gpgSshKeygrip = mkOption { type = types.str; default = ""; };
     };
   };
 }

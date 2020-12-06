@@ -9,17 +9,11 @@ let
 in
 {
   imports = [
-      ./nix/dotfiles.nix
-    ];
+    ./nix/dotfiles.nix
+  ];
 
   dotfiles = import ./user.nix;
   networking.hostName = config.dotfiles.hostname;
-
-  boot = {
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
-    binfmt.emulatedSystems = [ "aarch64-linux" ];
-  };
 
   nixpkgs = {
     config = {
@@ -27,12 +21,10 @@ in
         builtins.elem
           (getName pkg)
           [
-            "google-chrome"
             "spotify"
             "spotify-unwrapped"
             "slack"
             "zoom-us"
-            "intel-ocl"
             "faac" # required for zoom
           ];
     };
@@ -69,49 +61,19 @@ in
 
   networking.dhcpcd.enable = false;
   networking.networkmanager.enable = true;
-  services.avahi = {
-    enable = true;
-    nssmdns = true;
-  };
 
-  time.timeZone = "Pacific/Auckland";
+  i18n.defaultLocale = "en_US.UTF-8";
+  console = {
+      font = "Lat2-Terminus16";
+      keyMap = "us";
+  };
+  time.timeZone = "Europe/Riga";
 
   environment.systemPackages = with pkgs; [ vim git ];
 
-  # Linux>5.6 solve some issues with Intel GPUs
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  boot.kernel.sysctl = {
-    "vm.swappiness" = 100; # https://chrisdown.name/2018/01/02/in-defence-of-swap.html
-    "fs.inotify.max_user_watches" = 2048000;
-  };
-
   boot.cleanTmpDir = true;
-  services.fwupd.enable = true;
-
-  services.openssh.enable = true;
-  networking.firewall = {
-    enable = true;
-    allowedTCPPorts = [ 22 ];
-  };
-
-  services.tor = {
-    enable = true;
-    client.enable = true;
-  };
-
-  virtualisation.docker = {
-    enable = true;
-    liveRestore = false;
-    autoPrune.enable = true;
-  };
 
   services.logind.lidSwitch = "ignore";
-
-  services.locate = {
-    enable = true;
-    interval = "hourly";
-  };
 
   services.xserver = {
     enable = true;
@@ -130,22 +92,26 @@ in
     xkbOptions = "caps:escape";
   };
 
-  services.lorri.enable = true;
-
   services.earlyoom = {
     enable = true;
     freeMemThreshold = 5;
   };
 
+  services.printing.enable = true;
+
+  virtualisation.docker = {
+      enable = true;
+  };
+
+  sound.enable = true;
   hardware.pulseaudio = {
     enable = true;
-    package = pkgs.pulseaudioFull;
   };
   hardware.opengl.driSupport32Bit = true;
-  hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
+  # hardware.opengl.extraPackages = [ pkgs.intel-ocl ];
 
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
+  # hardware.bluetooth.enable = true;
+  # services.blueman.enable = true;
 
   documentation.nixos.enable = false;
 
@@ -154,7 +120,7 @@ in
     home = "/home/${config.dotfiles.username}";
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "wheel" "networkmanager" "docker" ];
+    extraGroups = [ "wheel" "networkmanager" "video" "docker" ];
     shell = "${pkgs.zsh}/bin/zsh";
   };
 

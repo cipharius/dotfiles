@@ -45,16 +45,6 @@
           detachedHead = false;
         };
       };
-    } // (
-      if config.dotfiles.gpgKey != ""
-      then {
-        signing = {
-          signByDefault = true;
-          key = config.dotfiles.gpgKey;
-          gpgPath = "gpg";
-        };
-      }
-      else { }
-    );
+    };
   };
 }
