@@ -116,7 +116,7 @@ in
   # hardware.bluetooth.enable = true;
   # services.blueman.enable = true;
 
-  documentation.nixos.enable = false;
+  documentation.nixos.enable = true;
 
 
   users.extraUsers.${config.dotfiles.username} = {
