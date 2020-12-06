@@ -78,18 +78,21 @@ in
   services.xserver = {
     enable = true;
     autorun = true;
+    xkbOptions = "caps:escape";
+
     desktopManager.xterm.enable = true;
+
     displayManager = {
       autoLogin = {
         enable = true;
         user = config.dotfiles.username;
       };
+
       lightdm = {
         enable = true;
         greeter.enable = false;
       };
     };
-    xkbOptions = "caps:escape";
   };
 
   services.earlyoom = {
