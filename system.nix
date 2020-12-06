@@ -121,7 +121,7 @@ in
     isNormalUser = true;
     uid = 1000;
     extraGroups = [ "wheel" "networkmanager" "video" "docker" ];
-    shell = "${pkgs.zsh}/bin/zsh";
+    shell = "${pkgs.fish}/bin/fish";
   };
 
   home-manager.users.${config.dotfiles.username} = args: import ./home.nix (args // { inherit pkgs; });

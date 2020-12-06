@@ -6,7 +6,7 @@
     ./home/git.nix
     ./home/qutebrowser.nix
     ./home/kitty.nix
-    ./home/shell.nix
+    ./home/fish-shell.nix
   ];
 
   dotfiles = import ./user.nix;
