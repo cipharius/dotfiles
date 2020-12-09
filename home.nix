@@ -28,6 +28,7 @@
     teams
     steam
     virt-manager
+    paraview
 
     # services
     spotify
