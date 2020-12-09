@@ -43,6 +43,9 @@ case "$mode" in
     "switch")
         trace sudo nixos-rebuild switch --flake . "${@}"
         ;;
+    "test")
+        trace sudo nixos-rebuild test --flake . "${@}"
+        ;;
     "update")
         trace nix flake update --recreate-lock-file
         "$0" build
