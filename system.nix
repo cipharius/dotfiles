@@ -23,9 +23,13 @@ in
           [
             "spotify"
             "spotify-unwrapped"
+            "teams"
             "slack"
             "zoom-us"
             "faac" # required for zoom
+            "steam"
+            "steam-original"
+            "steam-runtime"
           ];
     };
     overlays = [

@@ -25,6 +25,9 @@
     xsel
     zathura
     inkscape
+    teams
+    steam
+    virt-manager
 
     # services
     spotify
