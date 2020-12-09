@@ -76,8 +76,10 @@
 # }
 
 # SCRIPTS #
-#source "%val{config}/scripts/lf.kak"
-#require-module lf
+hook global KakBegin .* %{
+  source "%val{config}/scripts/lf.kak"
+  require-module lf
+}
 
 # source "%val{config}/scripts/neuron.kak"
 # require-module neuron
@@ -86,7 +88,7 @@
 # }
 
 # VISUAL #
- 
+
 colorscheme zenburn
 
 add-highlighter global/number-lines number-lines -relative
@@ -116,16 +118,6 @@ hook global ModeChange "push:normal:prompt" %{
 hook global WinSetOption "filetype=kak" %{
     map -docstring "evaluate whole buffer" \
         window user e %{%: eval %reg{.}<ret>}
-}
-
-hook global ModuleLoaded "ruby" %{
-    # Change heredoc to support different language highlighting
-    remove-highlighter shared/ruby/heredoc
-    add-highlighter shared/ruby/heredoc region '<<[-~]?(?!self)(\w+)'      '^\h*(\w+)$' regions
-    add-highlighter shared/ruby/heredoc/default default-region fill string
-
-    require-module sql
-    add-highlighter shared/ruby/heredoc/sql region '<<-SQL' 'SQL' ref sql
 }
 
 # COMMANDS #
@@ -187,5 +179,5 @@ map -docstring 'lf' \
     global user d ': enter-user-mode lf-mode<ret>'
 map -docstring 'Split window' \
     global user s ': split<ret>'
-map -docstring 'Tagbar toggle' \
-    global user t ': try tagbar-toggle catch tagbar-enable<ret>'
+# map -docstring 'Tagbar toggle' \
+#     global user t ': try tagbar-toggle catch tagbar-enable<ret>'
