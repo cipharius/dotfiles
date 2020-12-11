@@ -116,7 +116,8 @@ myKeys = let leader = "M-<Space>" in
     , ("M-<Space> <Space>",       PShell.shellPrompt myPrompt)
 
     , (leader<>" a b",            spawn myBrowser)
-    , (leader<>" a s",            spawn myTerminal)
+    , (leader<>" a t",            spawn myTerminal)
+    , (leader<>" a e",            spawn $ myTerminal <> " $EDITOR")
     , (leader<>" a m",            spawn "spotify")
 
     , (leader<>" l l",            DWs.selectWorkspace myPrompt)
@@ -128,8 +129,6 @@ myKeys = let leader = "M-<Space>" in
     , (leader<>" w S-w",          PWin.windowPrompt myPrompt PWin.Bring PWin.allWindows)
     , (leader<>" w s",            DWs.withWorkspace myPrompt (windows . WS.shift))
     , (leader<>" w p",            DProj.shiftToProjectPrompt myPrompt)
-
-    , (leader<>" a t",            spawn myTerminal)
 
     , (leader<>" m b",            Warp.banishScreen Warp.LowerRight)
     , (leader<>" m m",            Warp.warpToWindow 0.5 0.5)
