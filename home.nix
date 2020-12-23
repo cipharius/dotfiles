@@ -29,6 +29,7 @@
     steam
     virt-manager
     paraview
+    pavucontrol
 
     # services
     spotify
