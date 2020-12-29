@@ -105,6 +105,7 @@ in
   };
 
   services.printing.enable = true;
+  programs.light.enable = true;
 
   virtualisation.docker = {
       enable = true;

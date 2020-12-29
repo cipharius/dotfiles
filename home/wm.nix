@@ -17,7 +17,6 @@
     home = {
       packages = with pkgs; [
         playerctl
-        light
         xmobar
         libnotify
       ];
