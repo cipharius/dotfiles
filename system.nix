@@ -126,7 +126,7 @@ in
     home = "/home/${config.dotfiles.username}";
     isNormalUser = true;
     uid = 1000;
-    extraGroups = [ "wheel" "networkmanager" "video" "docker" ];
+    extraGroups = [ "wheel" "networkmanager" "video" "docker" "input" ];
     shell = "${pkgs.fish}/bin/fish";
   };
 
