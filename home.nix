@@ -30,6 +30,8 @@
     virt-manager
     paraview
     pavucontrol
+    transmission-qt
+    vlc
 
     # services
     spotify
