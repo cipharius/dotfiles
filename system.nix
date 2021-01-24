@@ -73,7 +73,11 @@ in
   };
   time.timeZone = "Europe/Riga";
 
-  environment.systemPackages = with pkgs; [ vim git ];
+  environment.systemPackages = with pkgs; [
+    vim
+    git
+    udiskie
+  ];
 
   boot.cleanTmpDir = true;
 
