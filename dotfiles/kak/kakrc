@@ -1,79 +1,19 @@
-# PLUGINS #
-#source "%val{config}/plugins/plug.kak/rc/plug.kak"
+# Kakoune LSP Client
+eval %sh{kak-lsp --kakoune -s $kak_session}
 
-# plug "robertmeta/plug.kak" noload
+define-command ne -docstring 'go to next error/warning from lsp' %{ lsp-find-error --include-warnings }
+define-command pe -docstring 'go to previous error/warning from lsp' %{ lsp-find-error --previous --include-warnings }
+define-command ee -docstring 'go to current error/warning from lsp' %{ lsp-find-error --include-warnings; lsp-find-error --previous --include-warnings }
 
-# plug "kak-lsp/kak-lsp" do %{
-#   cargo install --force --locked --path .
-# } config %{
-#   # uncomment to enable debugging
-#   # set global lsp_cmd "kak-lsp -s %val{session} -vvv --log /tmp/kak-lsp.log"
+define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
 
-#   define-command ne -docstring 'go to next error/warning from lsp' %{ lsp-find-error --include-warnings }
-#   define-command pe -docstring 'go to previous error/warning from lsp' %{ lsp-find-error --previous --include-warnings }
-#   define-command ee -docstring 'go to current error/warning from lsp' %{ lsp-find-error --include-warnings; lsp-find-error --previous --include-warnings }
-
-#   define-command lsp-restart -docstring 'restart lsp server' %{ lsp-stop; lsp-start }
-
-#   hook global WinSetOption filetype=(ruby|haskell|json) %{
-#     # set-option window lsp_auto_highlight_references true # NOTE Not supported by JSON
-#     set-option window lsp_hover_anchor false
-#     map window user , %{: enter-user-mode lsp<ret>}
-#     echo -debug "Enabling LSP for filtetype %opt{filetype}"
-#     lsp-enable-window
-#   }
-
-#   hook global KakEnd .* lsp-exit
-# }
-
-# plug "TeddyDD/kakoune-edit-or-dir" config %{
-#     unalias global e edit
-#     alias global e edit-or-dir
-#     hook global WinSetOption filetype=file_select %{
-#         map window normal l ':<space>edit-or-dir-forward<ret>'
-#         map window normal h ':<space>edit-or-dir-back<ret>'
-#         map window normal q ':<space>delete-buffer<ret>'
-#     }
-# }
-
-# plug "andreyorst/fzf.kak" config %{
-#     map -docstring "fzf" \
-#         global user <space> ': fzf-mode<ret>'
-# }
-
-# plug "andreyorst/tagbar.kak" defer tagbar %{
-#   set-option global tagbar_sort false
-#   set-option global tagbar_size 40
-#   set-option global tagbar_display_anon false
-# }
-
-# plug "cipharius/buffer-by-name.kak" defer buffer-by-name %{
-#   alias global b buffer-by-name
-# } demand
-
-# plug "andreyorst/kaktree" config %{
-#   hook global WinSetOption filetype=kaktree %{
-#     remove-highlighter buffer/numbers
-#     remove-highlighter buffer/matching
-#     remove-highlighter buffer/wrap
-#     remove-highlighter buffer/show-whitespaces
-#   }
-#   kaktree-enable
-# }
-
-# plug "https://gitlab.com/notramo/elvish.kak" defer elvish %{} demand
-
-# Dependancy of connect.kak
-# plug "alexherbo2/prelude.kak"
-# plug "alexherbo2/connect.kak"
-
-# plug "eraserhd/kak-ansi"
-
-# plug "cipharius/restclient.kak" config %{
-#     hook global WinSetOption filetype=restclient %{
-#         map window user e %{: restclient-execute<ret>}
-#     }
-# }
+hook global WinSetOption filetype=(haskell|python) %{
+  # set-option window lsp_auto_highlight_references true # NOTE Not supported by JSON
+  set-option window lsp_hover_anchor false
+  map window user , %{: enter-user-mode lsp<ret>}
+  echo -debug "Enabling LSP for filtetype %opt{filetype}"
+  lsp-enable-window
+}
 
 # SCRIPTS #
 hook global KakBegin .* %{
@@ -181,3 +121,57 @@ map -docstring 'Split window' \
     global user s ': split<ret>'
 # map -docstring 'Tagbar toggle' \
 #     global user t ': try tagbar-toggle catch tagbar-enable<ret>'
+
+# Old config
+#   hook global KakEnd .* lsp-exit
+# }
+
+# plug "TeddyDD/kakoune-edit-or-dir" config %{
+#     unalias global e edit
+#     alias global e edit-or-dir
+#     hook global WinSetOption filetype=file_select %{
+#         map window normal l ':<space>edit-or-dir-forward<ret>'
+#         map window normal h ':<space>edit-or-dir-back<ret>'
+#         map window normal q ':<space>delete-buffer<ret>'
+#     }
+# }
+
+# plug "andreyorst/fzf.kak" config %{
+#     map -docstring "fzf" \
+#         global user <space> ': fzf-mode<ret>'
+# }
+
+# plug "andreyorst/tagbar.kak" defer tagbar %{
+#   set-option global tagbar_sort false
+#   set-option global tagbar_size 40
+#   set-option global tagbar_display_anon false
+# }
+
+# plug "cipharius/buffer-by-name.kak" defer buffer-by-name %{
+#   alias global b buffer-by-name
+# } demand
+
+# plug "andreyorst/kaktree" config %{
+#   hook global WinSetOption filetype=kaktree %{
+#     remove-highlighter buffer/numbers
+#     remove-highlighter buffer/matching
+#     remove-highlighter buffer/wrap
+#     remove-highlighter buffer/show-whitespaces
+#   }
+#   kaktree-enable
+# }
+
+# plug "https://gitlab.com/notramo/elvish.kak" defer elvish %{} demand
+
+# Dependancy of connect.kak
+# plug "alexherbo2/prelude.kak"
+# plug "alexherbo2/connect.kak"
+
+# plug "eraserhd/kak-ansi"
+
+# plug "cipharius/restclient.kak" config %{
+#     hook global WinSetOption filetype=restclient %{
+#         map window user e %{: restclient-execute<ret>}
+#     }
+# }
+

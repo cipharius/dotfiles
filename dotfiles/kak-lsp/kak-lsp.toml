@@ -1,0 +1,12 @@
+[language.python]
+filetypes = ["python"]
+roots = ["requirements.txt", "setup.py", ".git", ".hg"]
+command = "python-language-server"
+offset_encoding = "utf-8"
+
+[language.haskell]
+filetypes = ["haskell"]
+roots = ["Setup.hs", "stack.yaml", "*.cabal"]
+command = "haskell-language-server"
+args = ["--lsp"]
+
