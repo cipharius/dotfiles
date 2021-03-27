@@ -1,0 +1,168 @@
+{
+  "nodes": {
+    "fishPlugins-done": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1611520292,
+        "narHash": "sha256-exW2dF45AuO8jUw3uSu9XG9j4sKhGc7rWYHMKGcq88Q=",
+        "owner": "franciscolourenco",
+        "repo": "done",
+        "rev": "f7886fdc26cd849ddf21fb05d516548914dd060a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "franciscolourenco",
+        "repo": "done",
+        "type": "github"
+      }
+    },
+    "fishPlugins-pure": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1616407147,
+        "narHash": "sha256-60NKbQurOxqjnXmluDCh+C/b/z52IYK2g4CeZASWyJk=",
+        "owner": "pure-fish",
+        "repo": "pure",
+        "rev": "9d17b2780165572bc6c181cd0e7c5d6dd13be5c1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pure-fish",
+        "repo": "pure",
+        "type": "github"
+      }
+    },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1612902587,
+        "narHash": "sha256-VZ7Z1OMFf5ReObu3CCVBsC2DWloTYDjqW1onUKejVrE=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "209566c752c4428c7692c134731971193f06b37c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "ref": "release-20.09",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "kakounePlugins-kakboard": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1588988748,
+        "narHash": "sha256-bVMZT4uQs765zjMAhDU2IRoBQcYHZeUtzQl4ILZeds8=",
+        "owner": "lePerdu",
+        "repo": "kakboard",
+        "rev": "2f13f5cd99591b76ad5cba230815b80138825120",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lePerdu",
+        "repo": "kakboard",
+        "type": "github"
+      }
+    },
+    "kakounePlugins-lsp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1616325339,
+        "narHash": "sha256-TB7Nw6oEa31hG6d8eDrEKtS0b/hvqegVM1ZURWPTj88=",
+        "owner": "kak-lsp",
+        "repo": "kak-lsp",
+        "rev": "ef9379ceceeb590b8fc8c4ff373b0d94be76066e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "kak-lsp",
+        "repo": "kak-lsp",
+        "type": "github"
+      }
+    },
+    "kakounePlugins-rainbow": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1615115950,
+        "narHash": "sha256-LpG6LsY5GLRlzZtXPsdyxUH5mv9o4ODE7NNKlXtNp8M=",
+        "owner": "JJK96",
+        "repo": "kakoune-rainbow",
+        "rev": "63097fbf478217f8b5aa4f85eaa26c95d7c5243e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "JJK96",
+        "repo": "kakoune-rainbow",
+        "type": "github"
+      }
+    },
+    "kakounePlugins-surround": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1537174588,
+        "narHash": "sha256-0PicMTkYRnhtrFAMWVgynE4HfoL9/EHZIu4rTSE+zSU=",
+        "owner": "h-youhei",
+        "repo": "kakoune-surround",
+        "rev": "efe74c6f434d1e30eff70d4b0d737f55bf6c5022",
+        "type": "github"
+      },
+      "original": {
+        "owner": "h-youhei",
+        "repo": "kakoune-surround",
+        "type": "github"
+      }
+    },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1616493443,
+        "narHash": "sha256-xMDBWCa7oXFU1pBr25Fza/uv+IciMHogJMQ6g+gHQG4=",
+        "owner": "nixos",
+        "repo": "nixos-hardware",
+        "rev": "758bc63af2bde87563f9c27710f3dcc16ff9096f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1616670887,
+        "narHash": "sha256-wn+l9qJfR5sj5Gq4DheJHAcBDfOs9K2p9seW2f35xzs=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "c0e881852006b132236cbf0301bd1939bb50867e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "fishPlugins-done": "fishPlugins-done",
+        "fishPlugins-pure": "fishPlugins-pure",
+        "home-manager": "home-manager",
+        "kakounePlugins-kakboard": "kakounePlugins-kakboard",
+        "kakounePlugins-lsp": "kakounePlugins-lsp",
+        "kakounePlugins-rainbow": "kakounePlugins-rainbow",
+        "kakounePlugins-surround": "kakounePlugins-surround",
+        "nixos-hardware": "nixos-hardware",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
