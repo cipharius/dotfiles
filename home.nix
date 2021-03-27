@@ -45,6 +45,7 @@
     hack-font
 
     # CLI
+    ag
     curl
     direnv
     dnsutils
