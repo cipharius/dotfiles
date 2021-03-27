@@ -17,6 +17,7 @@ in
 
   nixpkgs = {
     config = {
+      allowBroken = true;
       allowUnfreePredicate = pkg:
         builtins.elem
           (getName pkg)
@@ -59,9 +60,11 @@ in
     optimise.automatic = true;
     extraOptions = ''
       builders-use-substitutes = true
-      experimental-features = flakes nix-command
+      experimental-features = flakes nix-command ca-references
     '';
   };
+
+  programs.command-not-found.enable = false;
 
   networking.dhcpcd.enable = false;
   networking.networkmanager.enable = true;
@@ -123,9 +126,9 @@ in
 
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+  programs.dconf.enable = true;
 
   documentation.nixos.enable = true;
-
 
   users.extraUsers.${config.dotfiles.username} = {
     home = "/home/${config.dotfiles.username}";
@@ -135,7 +138,11 @@ in
     shell = "${pkgs.fish}/bin/fish";
   };
 
-  home-manager.users.${config.dotfiles.username} = args: import ./home.nix (args // { inherit pkgs; });
+  home-manager = {
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    users.${config.dotfiles.username} = args: import ./home.nix (args // { inherit pkgs; });
+  };
 
   system.stateVersion = "20.09";
 }

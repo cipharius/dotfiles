@@ -38,7 +38,7 @@ case "$mode" in
         trace nixos-rebuild build --flake . "${@}"
         drv="$(readlink ./result)"
         echo "Drv: $drv"
-        trace nix diff-closures /var/run/current-system/ "$drv" || true
+        trace nix store diff-closures /var/run/current-system/ "$drv" || true
         ;;
     "switch")
         trace sudo nixos-rebuild switch --flake . "${@}"
@@ -47,7 +47,7 @@ case "$mode" in
         trace sudo nixos-rebuild test --flake . "${@}"
         ;;
     "update")
-        trace nix flake update --recreate-lock-file
+        trace nix flake update
         "$0" build
         ;;
     "info")

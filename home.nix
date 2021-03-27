@@ -13,6 +13,8 @@
   dotfiles = import ./user.nix;
 
   home.packages = with pkgs; [
+    (callPackage ./scripts {})
+
     # WM
     acpi
     maim
@@ -89,7 +91,6 @@
   home.file.".profile" = {
     text = ''
       export NIX_PATH=nixpkgs=${pkgs.path}
-      source "$HOME/.nix-profile/etc/profile.d/hm-session-vars.sh"
       export TMPDIR=/tmp
       export TMP=$TMPDIR
       source ${./dotfiles/profile}
