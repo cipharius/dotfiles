@@ -79,6 +79,14 @@ in
     vim
     git
     udiskie
+
+    arcan.arcan
+    arcan.acfgfs
+    arcan.aloadimage
+    arcan.aclip
+    arcan.shmmon
+    arcan.durden
+    arcan.pipeworld
   ];
 
   boot.cleanTmpDir = true;
