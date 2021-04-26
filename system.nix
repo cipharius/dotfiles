@@ -25,7 +25,6 @@ in
             "spotify"
             "spotify-unwrapped"
             "teams"
-            "slack"
             "zoom"
             "faac" # required for zoom
             "steam"
