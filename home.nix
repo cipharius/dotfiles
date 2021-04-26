@@ -49,6 +49,7 @@
     curl
     direnv
     dnsutils
+    dolt
     file
     fzf
     graphviz
