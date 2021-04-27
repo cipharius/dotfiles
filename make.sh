@@ -46,6 +46,9 @@ case "$mode" in
     "test")
         trace sudo nixos-rebuild test --flake . "${@}"
         ;;
+    "boot")
+        trace sudo nixos-rebuild boot --flake . "${@}"
+        ;;
     "update")
         trace nix flake update
         "$0" build
