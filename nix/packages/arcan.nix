@@ -227,9 +227,9 @@ in {
       owner = "letoram";
       repo = "pipeworld";
       rev = "7aaf8487e587b6d6feb37c3df199f5347757a749";
-      sha256 = "sha256-1zAVkuAZGSCuIs1bFRyESCwVyhTNKXJJFuFo/bmknkE=";
+      sha256 = "sha256-kCiK+BeXHn7Hdp0qfjGK5voydVV3jfszvsd7awnV1EE=";
     };
-    applRoot = "";
+    applRoot = "pipeworld";
   };
 
   safespaces = mkArcanAppl {
